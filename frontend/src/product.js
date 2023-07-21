@@ -8,7 +8,7 @@ const products = [
     brand: 'Apple',
     category: 'Electronics',
     price: 89.99,
-    countlnStock: 3,
+    countInStock: 3,
     numReviews: 4,
     },
     {
@@ -20,7 +20,7 @@ const products = [
     brand: 'Apple',
     category: 'Electronics',
     price: 89.99,
-    countlnStock: 3,
+    countInStock: 3,
     numReviews: 4,
     },
 ]
