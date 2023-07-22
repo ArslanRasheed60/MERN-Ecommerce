@@ -20,7 +20,7 @@ import Rating from "../components/Rating";
 // } from '../actions/productActions'
 // import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
 
-import products from "../product";
+import products from "../products";
 
 const ProductScreen = () =>
   // { history, match }
@@ -97,7 +97,7 @@ const ProductScreen = () =>
                   </ListGroup.Item>
                   <ListGroup.Item>
                     <Rating
-                      value={product.numReviews}
+                      value={product.rating}
                       text={`${product.numReviews} reviews`}
                     />
                   </ListGroup.Item>

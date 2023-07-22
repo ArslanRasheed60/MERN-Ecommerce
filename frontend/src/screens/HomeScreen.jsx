@@ -10,7 +10,7 @@ import Product from '../components/Product'
 // import Meta from '../components/Meta'
 // import { listProducts } from '../actions/productActions'
 
-import products from '../product'
+import products from '../products'
 
 const HomeScreen = (
     // { match }
