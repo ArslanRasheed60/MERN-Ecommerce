@@ -4,16 +4,14 @@ import dotenv from "dotenv"
 const cors = require("cors")
 import colors from 'colors'
 // import morgan from 'morgan'
-// import { notFound, errorHandler } from './middleware/errorMiddleware.js'
+import { notFound, errorHandler } from './middleware/errorMiddleware.ts'
 import connectDB from './config/db.ts'
 
-// import productRoutes from './routes/productRoutes.js'
+import productRoutes from './routes/productRoutes.ts'
 // import userRoutes from './routes/userRoutes.js'
 // import orderRoutes from './routes/orderRoutes.js'
 // import uploadRoutes from './routes/uploadRoutes.js'
 
-import products from "./data/products.ts"
-import IProduct from './interfaces/product.js'
 
 dotenv.config()
 
@@ -25,10 +23,12 @@ const app: Express = express()
 //   app.use(morgan('dev'))
 // }
 
+//default middle wares
 app.use(express.json())
 app.use(cors())
 
-// app.use('/api/products', productRoutes)
+
+app.use('/api/products', productRoutes)
 // app.use('/api/users', userRoutes)
 // app.use('/api/orders', orderRoutes)
 // app.use('/api/upload', uploadRoutes)
@@ -52,17 +52,11 @@ app.use(cors())
   })
 // }
 
-// app.use(notFound)
-// app.use(errorHandler)
 
-app.get('/api/products', (req: Request, res: Response)=>{
-  res.json(products)
-})
+//custom middlewares called after the url 
+app.use(notFound)
+app.use(errorHandler)
 
-app.get('/api/products/:id', (req: Request, res: Response)=>{
-  const product = products.find((p)=>{p._id === parseInt(req.params.id)})
-  res.json(product)
-})
 
 const PORT = process.env.PORT || 5000
 
