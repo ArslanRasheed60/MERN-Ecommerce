@@ -1,4 +1,5 @@
 import mongoose, { ConnectOptions } from "mongoose"
+import colors from 'colors'
 
 const connectDB : any = async (): Promise<void> => {
     try {
@@ -8,9 +9,9 @@ const connectDB : any = async (): Promise<void> => {
         // useCreateIndex: true,
       } as ConnectOptions)
   
-      console.log(`MongoDB Connected: ${conn.connection.host}`.cyan.underline)
+      console.log(colors.cyan.underline(`MongoDB Connected: ${conn.connection.host}`))
     } catch (error: any) {
-      console.error(`Error: ${error.message}`.red.underline.bold)
+      console.error(colors.red.underline.bold(`Error: ${error.message}`))
       process.exit(1)
     }
   }

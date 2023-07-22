@@ -7,7 +7,9 @@
     "start": "ts-node backend/server.ts",
     "server": "nodemon backend/server.ts",
     "client": "npm start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "data:import": "ts-node backend/seeder.ts",
+    "data:destroy": "ts-node backend/seeder.ts -d" 
   },
   "keywords": [],
   "author": "Arslan Rasheed",
