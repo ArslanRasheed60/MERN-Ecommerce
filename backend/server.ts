@@ -1,10 +1,11 @@
 import path from 'path'
 import express, {Express, Request, Response} from "express"
 import dotenv from "dotenv"
-// import colors from 'colors'
+const cors = require("cors")
+import colors from 'colors'
 // import morgan from 'morgan'
 // import { notFound, errorHandler } from './middleware/errorMiddleware.js'
-// import connectDB from './config/db.js'
+import connectDB from './config/db.ts'
 
 // import productRoutes from './routes/productRoutes.js'
 // import userRoutes from './routes/userRoutes.js'
@@ -16,7 +17,7 @@ import IProduct from './interfaces/product.js'
 
 dotenv.config()
 
-// connectDB()
+connectDB()
 
 const app: Express = express()
 
@@ -25,6 +26,7 @@ const app: Express = express()
 // }
 
 app.use(express.json())
+app.use(cors())
 
 // app.use('/api/products', productRoutes)
 // app.use('/api/users', userRoutes)
@@ -67,6 +69,6 @@ const PORT = process.env.PORT || 5000
 app.listen(
   PORT,
   ()=>console.log(
-    `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`
+    `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold
   )
 )

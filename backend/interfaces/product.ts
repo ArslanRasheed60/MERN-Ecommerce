@@ -1,12 +1,16 @@
+import IReview from "./review";
+
 export default interface IProduct{
-    _id: number;
+    _id?: any;
+    user?: any;
     name: string,
     image: string,
     brand: string,
     description: string
     category: string,
-    price: number,
-    countInStock: number,
-    rating: number,
-    numReviews: number,
+    price?: number,
+    countInStock?: number,
+    rating?: number,
+    numReviews?: number,
+    reviews?: [IReview];
 }
