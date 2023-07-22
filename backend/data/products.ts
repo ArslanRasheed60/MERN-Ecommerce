@@ -1,4 +1,6 @@
-const products = [
+import IProduct from "../interfaces/product.js"
+
+const products: IProduct[] = [
   {
     _id: 1,
     name: 'Airpods Wireless Bluetooth Headphones',

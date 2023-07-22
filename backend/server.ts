@@ -11,6 +11,9 @@ import dotenv from "dotenv"
 // import orderRoutes from './routes/orderRoutes.js'
 // import uploadRoutes from './routes/uploadRoutes.js'
 
+import products from "./data/products.ts"
+import IProduct from './interfaces/product.js'
+
 dotenv.config()
 
 // connectDB()
@@ -49,6 +52,15 @@ app.use(express.json())
 
 // app.use(notFound)
 // app.use(errorHandler)
+
+app.get('/api/products', (req: Request, res: Response)=>{
+  res.json(products)
+})
+
+app.get('/api/products/:id', (req: Request, res: Response)=>{
+  const product = products.find((p)=>{p._id === parseInt(req.params.id)})
+  res.json(product)
+})
 
 const PORT = process.env.PORT || 5000
 
