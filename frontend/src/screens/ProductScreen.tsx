@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-// import { useDispatch, useSelector } from 'react-redux'
+import { Link, useParams, useNavigate } from "react-router-dom";
 import {
   Row,
   Col,
@@ -11,78 +10,81 @@ import {
   Form,
 } from "react-bootstrap";
 import Rating from "../components/Rating";
-// import Message from '../components/Message'
-// import Loader from '../components/Loader'
+import Message from "../components/Message";
+import Loader from "../components/Loader";
 // import Meta from '../components/Meta'
-// import {
-//   listProductDetails,
-//   createProductReview,
-// } from '../actions/productActions'
+import {
+  listProductDetails,
+  //   createProductReview,
+} from "../actions/productActions";
+import { useAppSelector, useAppDispatch } from "../hooks";
 // import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
 
-import products from "../products";
+const ProductScreen = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-const ProductScreen = () =>
-  // { history, match }
-  {
-    const { id } = useParams();
-    console.log(id);
+  const [qty, setQty] = useState(1);
+  // const [rating, setRating] = useState(0)
+  // const [comment, setComment] = useState('')
 
-    const product = products.find((p) => p._id === parseInt(id ? id : "1"));
-    // const [qty, setQty] = useState(1)
-    // const [rating, setRating] = useState(0)
-    // const [comment, setComment] = useState('')
+  const dispatch = useAppDispatch();
 
-    // const dispatch = useDispatch()
+  const productDetails: any = useAppSelector((state) => state.productDetails);
+  const { loading, error, product } = productDetails;
 
-    // const productDetails = useSelector((state) => state.productDetails)
-    // const { loading, error, product } = productDetails
+  // const userLogin = useSelector((state) => state.userLogin)
+  // const { userInfo } = userLogin
 
-    // const userLogin = useSelector((state) => state.userLogin)
-    // const { userInfo } = userLogin
+  // const productReviewCreate = useSelector((state) => state.productReviewCreate)
+  // const {
+  //   success: successProductReview,
+  //   loading: loadingProductReview,
+  //   error: errorProductReview,
+  // } = productReviewCreate
 
-    // const productReviewCreate = useSelector((state) => state.productReviewCreate)
-    // const {
-    //   success: successProductReview,
-    //   loading: loadingProductReview,
-    //   error: errorProductReview,
-    // } = productReviewCreate
+  // useEffect(() => {
+  //   if (successProductReview) {
+  //     setRating(0)
+  //     setComment('')
+  //   }
+  //   if (!product._id || product._id !== match.params.id) {
+  //     dispatch(listProductDetails(match.params.id))
+  //     dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
+  //   }
+  // }, [dispatch, match, successProductReview])
 
-    // useEffect(() => {
-    //   if (successProductReview) {
-    //     setRating(0)
-    //     setComment('')
-    //   }
-    //   if (!product._id || product._id !== match.params.id) {
-    //     dispatch(listProductDetails(match.params.id))
-    //     dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
-    //   }
-    // }, [dispatch, match, successProductReview])
+  useEffect(() => {
+    if (!product._id || product._id !== id) {
+      dispatch(listProductDetails(id!));
+      // dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
+    }
+  }, [dispatch, id]);
 
-    // const addToCartHandler = () => {
-    //   history.push(`/cart/${match.params.id}?qty=${qty}`)
-    // }
+  const addToCartHandler = () => {
+    navigate(`/cart/${id}?qty=${qty}`);
+  };
 
-    // const submitHandler = (e) => {
-    //   e.preventDefault()
-    //   dispatch(
-    //     createProductReview(match.params.id, {
-    //       rating,
-    //       comment,
-    //     })
-    //   )
-    // }
+  // const submitHandler = (e) => {
+  //   e.preventDefault()
+  //   dispatch(
+  //     createProductReview(match.params.id, {
+  //       rating,
+  //       comment,
+  //     })
+  //   )
+  // }
 
-    return (
-      <>
-        <Link className="btn btn-light my-3" to="/">
-          Go Back
-        </Link>
-        {/* {loading ? ( */}
-        {/* <Loader /> */}
-        {/* ) : error ? ( */}
-        {/* <Message variant="danger">{error}</Message> */}
-        {/* ) : ( */}
+  return (
+    <>
+      <Link className="btn btn-light my-3" to="/">
+        Go Back
+      </Link>
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <Message variant="danger">{error}</Message>
+      ) : (
         <>
           {/* <Meta title={product.name} /> */}
           {product && (
@@ -130,7 +132,7 @@ const ProductScreen = () =>
                       </Row>
                     </ListGroup.Item>
 
-                    {/* {product.countInStock > 0 && (
+                    {product.countInStock > 0 && (
                       <ListGroup.Item>
                         <Row>
                           <Col>Qty</Col>
@@ -138,7 +140,7 @@ const ProductScreen = () =>
                             <Form.Control
                               as="select"
                               value={qty}
-                              onChange={(e) => setQty(e.target.value)}
+                              onChange={(e) => setQty(parseInt(e.target.value))}
                             >
                               {[...Array(product.countInStock).keys()].map(
                                 (x) => (
@@ -151,11 +153,11 @@ const ProductScreen = () =>
                           </Col>
                         </Row>
                       </ListGroup.Item>
-                    )} */}
+                    )}
 
                     <ListGroup.Item>
                       <Button
-                        // onClick={addToCartHandler}
+                        onClick={addToCartHandler}
                         className="btn btn-dark btn-block w-100"
                         type="button"
                         disabled={product.countInStock === 0}
@@ -237,9 +239,9 @@ const ProductScreen = () =>
               </Col>
             </Row> */}
         </>
-        {/* )} */}
-      </>
-    );
-  };
+      )}
+    </>
+  );
+};
 
 export default ProductScreen;

@@ -32,7 +32,7 @@ export const listProducts = (keyword = '', pageNumber = ''): any => async (
     dispatch({ type: PRODUCT_LIST_REQUEST })
 
     const { data } = await axios.get(
-      `${LOCAL_IP}/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
+      `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
     )
 
     dispatch({
@@ -50,26 +50,26 @@ export const listProducts = (keyword = '', pageNumber = ''): any => async (
   }
 }
 
-// export const listProductDetails = (id) => async (dispatch) => {
-//   try {
-//     dispatch({ type: PRODUCT_DETAILS_REQUEST })
+export const listProductDetails = (id: string): any => async (dispatch: any) => {
+  try {
+    dispatch({ type: PRODUCT_DETAILS_REQUEST })
 
-//     const { data } = await axios.get(`/api/products/${id}`)
+    const { data } = await axios.get(`/api/products/${id}`)
 
-//     dispatch({
-//       type: PRODUCT_DETAILS_SUCCESS,
-//       payload: data,
-//     })
-//   } catch (error) {
-//     dispatch({
-//       type: PRODUCT_DETAILS_FAIL,
-//       payload:
-//         error.response && error.response.data.message
-//           ? error.response.data.message
-//           : error.message,
-//     })
-//   }
-// }
+    dispatch({
+      type: PRODUCT_DETAILS_SUCCESS,
+      payload: data,
+    })
+  } catch (error: any) {
+    dispatch({
+      type: PRODUCT_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
 
 // export const deleteProduct = (id) => async (dispatch, getState) => {
 //   try {

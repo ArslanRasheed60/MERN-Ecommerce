@@ -35,5 +35,5 @@ export default interface IProduct{
 
 export default interface IProductAction{
     type: string;
-    payload: [IProduct]
+    payload: any
 }
