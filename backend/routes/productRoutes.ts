@@ -5,13 +5,13 @@ const router = express.Router()
 import {
   getProducts,
   getProductById,
-//   deleteProduct,
-//   createProduct,
-//   updateProduct,
-//   createProductReview,
-//   getTopProducts,
+  deleteProduct,
+  createProduct,
+  updateProduct,
+  createProductReview,
+  getTopProducts,
 } from '../controllers/productController.ts'
-// import { protect, admin } from '../middleware/authMiddleware.js'
+import { protect, admin } from '../middleware/authMiddleware.ts'
 
   
 // router.get('/:id', (req: Request, res: Response)=>{
@@ -21,13 +21,13 @@ import {
 
 router.route('/')
 .get(getProducts)
-// .post(protect, admin, createProduct)
-// router.route('/:id/reviews').post(protect, createProductReview)
-// router.get('/top', getTopProducts)
+.post(protect, admin, createProduct)
+router.route('/:id/reviews').post(protect, createProductReview)
+router.get('/top', getTopProducts)
 router
   .route('/:id')
   .get(getProductById)
-//   .delete(protect, admin, deleteProduct)
-//   .put(protect, admin, updateProduct)
+  .delete(protect, admin, deleteProduct)
+  .put(protect, admin, updateProduct)
 
 export default router

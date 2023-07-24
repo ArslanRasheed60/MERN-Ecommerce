@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import asyncHandler from 'express-async-handler'
 import generateToken from '../utils/generateToken.ts'  
 import User from '../models/userModel.ts'
+import IUser from '../interfaces/user.ts'
 
 // @desc    Auth user & get token
 // @route   POST /api/users/login
@@ -116,17 +117,17 @@ const getUsers = asyncHandler(async (req, res) => {
 // @desc    Delete user
 // @route   DELETE /api/users/:id
 // @access  Private/Admin
-// const deleteUser = asyncHandler(async (req, res) => {
-//   const user = await User.findById(req.params.id)
+const deleteUser = asyncHandler(async (req, res) => {
+  const user: any = await User.findById(req.params.id)
 
-//   if (user) {
-//     await user.remove()
-//     res.json({ message: 'User removed' })
-//   } else {
-//     res.status(404)
-//     throw new Error('User not found')
-//   }
-// })
+  if (user) {
+    await user.remove()
+    res.json({ message: 'User removed' })
+  } else {
+    res.status(404)
+    throw new Error('User not found')
+  }
+})
 
 // @desc    Get user by ID
 // @route   GET /api/users/:id
@@ -173,7 +174,7 @@ export {
   getUserProfile,
   updateUserProfile,
   getUsers,
-  // deleteUser,
+  deleteUser,
   getUserById,
   updateUser,
 }
