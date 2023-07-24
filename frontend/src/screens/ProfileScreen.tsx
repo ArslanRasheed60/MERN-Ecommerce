@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "../hooks";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { getUserDetails, updateUserProfile } from "../actions/userActions";
-// import { listMyOrders } from '../actions/orderActions'
+import { listMyOrders } from '../actions/orderActions'
 import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants";
 
 const ProfileScreen = () => {
@@ -30,8 +30,8 @@ const ProfileScreen = () => {
   const userUpdateProfile = useAppSelector((state) => state.userUpdateProfile);
   const { success } = userUpdateProfile;
 
-  // const orderListMy = useAppSelector((state) => state.orderListMy);
-  // const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
+  const orderListMy = useAppSelector((state) => state.orderListMy);
+  const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
 
   useEffect(() => {
     if (!userInfo) {
@@ -40,7 +40,7 @@ const ProfileScreen = () => {
       if (!user || !user.name || success) {
         dispatch({ type: USER_UPDATE_PROFILE_RESET });
         dispatch(getUserDetails("profile"));
-        // dispatch(listMyOrders())
+        dispatch(listMyOrders())
       } else {
         setName(user.name);
         setEmail(user.email);
@@ -118,7 +118,7 @@ const ProfileScreen = () => {
       </Col>
       <Col md={9}>
         <h2>My Orders</h2>
-        {/* {loadingOrders ? (
+        {loadingOrders ? (
           <Loader />
         ) : errorOrders ? (
           <Message variant="danger">{errorOrders}</Message>
@@ -165,7 +165,7 @@ const ProfileScreen = () => {
               ))}
             </tbody>
           </Table>
-        )} */}
+        )}
       </Col>
     </Row>
   );
