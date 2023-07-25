@@ -17,6 +17,7 @@ import UserListScreen from "./screens/UserListScreen";
 import UserEditScreen from "./screens/UserEditScreen";
 import ProductListScreen from "./screens/ProductListScreen";
 import ProductEditScreen from "./screens/ProductEditScreen";
+import OrderListScreen from "./screens/OrderListScreen";
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
       <main className="py-3">
         <Container>
           <Routes>
-            <Route path='/order/:id' Component={OrderScreen} />
+            <Route path="/order/:id" Component={OrderScreen} />
             <Route path="/login/shipping" Component={ShippingScreen} />
             <Route path="/payment" Component={PaymentScreen} />
             <Route path="/placeorder" Component={PlaceOrderScreen} />
@@ -34,18 +35,18 @@ function App() {
             <Route path="/profile" Component={ProfileScreen} />
             <Route path="/product/:id" Component={ProductScreen} />
             <Route path="/cart/:id?" Component={CartScreen} />
-            <Route path='/admin/userlist' Component={UserListScreen} />
-            <Route path='/admin/user/:id/edit' Component={UserEditScreen} />
+            <Route path="/admin/userlist" Component={UserListScreen} />
+            <Route path="/admin/user/:id/edit" Component={UserEditScreen} />
+            <Route path="/admin/productlist" Component={ProductListScreen} />
             <Route
-            path='/admin/productlist'
-            Component={ProductListScreen}
-          />
+              path="/admin/productlist/:pageNumber"
+              Component={ProductListScreen}
+            />
             <Route
-            path='/admin/productlist/:pageNumber'
-            Component={ProductListScreen}
-          />
-            <Route path='/admin/product/:id/edit' Component={ProductEditScreen} />
-            {/* <Route path='/admin/orderlist' component={OrderListScreen} /> */}
+              path="/admin/product/:id/edit"
+              Component={ProductEditScreen}
+            />
+            <Route path="/admin/orderlist" Component={OrderListScreen} />
             <Route path="/search/:keyword" Component={HomeScreen} />
             <Route path="/page/:pageNumber" Component={HomeScreen} />
             <Route
