@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { LOCAL_IP } from '../constants/IpLocal'
 import {
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,

@@ -3,7 +3,7 @@ import express, {Express, Request, Response} from "express"
 import dotenv from "dotenv"
 const cors = require("cors")
 import colors from 'colors'
-// import morgan from 'morgan'
+import morgan from 'morgan'
 import { notFound, errorHandler } from './middleware/errorMiddleware.ts'
 import connectDB from './config/db.ts'
 
@@ -19,9 +19,9 @@ connectDB()
 
 const app: Express = express()
 
-// if (process.env.NODE_ENV === 'development') {
-//   app.use(morgan('dev'))
-// }
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'))
+}
 
 //default middle wares
 app.use(express.json())
