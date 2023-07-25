@@ -1,58 +1,64 @@
-import React, { useEffect } from 'react'
-import { LinkContainer } from 'react-router-bootstrap'
-import { useNavigate, useParams } from 'react-router'
-import { Table, Button, Row, Col } from 'react-bootstrap'
-import Message from '../components/Message'
-import Loader from '../components/Loader'
-import Paginate from '../components/Paginate'
+import React, { useEffect } from "react";
+import { LinkContainer } from "react-router-bootstrap";
+import { useNavigate, useParams } from "react-router";
+import { Table, Button, Row, Col } from "react-bootstrap";
+import Message from "../components/Message";
+import Loader from "../components/Loader";
+import Paginate from "../components/Paginate";
 import {
   listProducts,
   deleteProduct,
   createProduct,
-} from '../actions/productActions'
-import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
-import { useAppDispatch, useAppSelector } from '../hooks'
-import IProduct from '../Interfaces/product'
+} from "../actions/productActions";
+import { PRODUCT_CREATE_RESET } from "../constants/productConstants";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
 const ProductListScreen = () => {
-  const navigate = useNavigate()
-  const {pageNumber} = useParams() || 1
+  const navigate = useNavigate();
+  const { pageNumber } = useParams() || 1;
 
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
-  const productList = useAppSelector((state) => state.productList)
-  
-  const { loading, error, products, page, pages }: {loading: any; error: any; products: any; page: number; pages: number} = productList
+  const productList = useAppSelector((state) => state.productList);
 
-  const productDelete = useAppSelector((state) => state.productDelete)
+  const {
+    loading,
+    error,
+    products,
+    page,
+    pages,
+  }: { loading: any; error: any; products: any; page: number; pages: number } =
+    productList;
+
+  const productDelete = useAppSelector((state) => state.productDelete);
   const {
     loading: loadingDelete,
     error: errorDelete,
     success: successDelete,
-  } = productDelete
+  } = productDelete;
 
-  const productCreate = useAppSelector((state) => state.productCreate)
+  const productCreate = useAppSelector((state) => state.productCreate);
   const {
     loading: loadingCreate,
     error: errorCreate,
     success: successCreate,
     product: createdProduct,
-  } = productCreate
+  } = productCreate;
 
-  const userLogin = useAppSelector((state) => state.userLogin)
-  const { userInfo } = userLogin
+  const userLogin = useAppSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   useEffect(() => {
-    dispatch({ type: PRODUCT_CREATE_RESET })
+    dispatch({ type: PRODUCT_CREATE_RESET });
 
     if (!userInfo || !userInfo.isAdmin) {
-      navigate('/login')
+      navigate("/login");
     }
 
     if (successCreate) {
-      navigate(`/admin/product/${createdProduct._id}/edit`)
+      navigate(`/admin/product/${createdProduct._id}/edit`);
     } else {
-      dispatch(listProducts('', pageNumber))
+      dispatch(listProducts("", pageNumber));
     }
   }, [
     dispatch,
@@ -62,41 +68,41 @@ const ProductListScreen = () => {
     successCreate,
     createdProduct,
     pageNumber,
-  ])
+  ]);
 
-  const deleteHandler = (id:string) => {
-    if (window.confirm('Are you sure')) {
-      dispatch(deleteProduct(id))
+  const deleteHandler = (id: string) => {
+    if (window.confirm("Are you sure")) {
+      dispatch(deleteProduct(id));
     }
-  }
+  };
 
   const createProductHandler = () => {
-    dispatch(createProduct())
-  }
+    dispatch(createProduct());
+  };
 
   return (
     <>
-      <Row className='align-items-center'>
+      <Row className="align-items-center">
         <Col>
           <h1>Products</h1>
         </Col>
-        <Col className='text-right'>
-          <Button className='my-3' onClick={createProductHandler}>
-            <i className='fas fa-plus'></i> Create Product
+        <Col className="text-right">
+          <Button className="my-3" onClick={createProductHandler}>
+            <i className="fas fa-plus"></i> Create Product
           </Button>
         </Col>
       </Row>
       {loadingDelete && <Loader />}
-      {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
+      {errorDelete && <Message variant="danger">{errorDelete}</Message>}
       {loadingCreate && <Loader />}
-      {errorCreate && <Message variant='danger'>{errorCreate}</Message>}
+      {errorCreate && <Message variant="danger">{errorCreate}</Message>}
       {loading ? (
         <Loader />
       ) : error ? (
-        <Message variant='danger'>{error}</Message>
+        <Message variant="danger">{error}</Message>
       ) : (
         <>
-          <Table striped bordered hover responsive className='table'>
+          <Table striped bordered hover responsive className="table">
             <thead>
               <tr>
                 <th>ID</th>
@@ -109,27 +115,29 @@ const ProductListScreen = () => {
             </thead>
             <tbody>
               {products.map((product: any) => {
-                return <tr key={product._id}>
-                  <td>{product._id}</td>
-                  <td>{product.name}</td>
-                  <td>${product.price}</td>
-                  <td>{product.category}</td>
-                  <td>{product.brand}</td>
-                  <td>
-                    <LinkContainer to={`/admin/product/${product._id}/edit`}>
-                      <Button variant='light' className='btn-sm'>
-                        <i className='fas fa-edit'></i>
+                return (
+                  <tr key={product._id}>
+                    <td>{product._id}</td>
+                    <td>{product.name}</td>
+                    <td>${product.price}</td>
+                    <td>{product.category}</td>
+                    <td>{product.brand}</td>
+                    <td>
+                      <LinkContainer to={`/admin/product/${product._id}/edit`}>
+                        <Button variant="light" className="btn-sm">
+                          <i className="fas fa-edit"></i>
+                        </Button>
+                      </LinkContainer>
+                      <Button
+                        variant="danger"
+                        className="btn-sm"
+                        onClick={() => deleteHandler(product._id)}
+                      >
+                        <i className="fas fa-trash"></i>
                       </Button>
-                    </LinkContainer>
-                    <Button
-                      variant='danger'
-                      className='btn-sm'
-                      onClick={() => deleteHandler(product._id)}
-                    >
-                      <i className='fas fa-trash'></i>
-                    </Button>
-                  </td>
-                </tr>
+                    </td>
+                  </tr>
+                );
               })}
             </tbody>
           </Table>
@@ -137,7 +145,7 @@ const ProductListScreen = () => {
         </>
       )}
     </>
-  )
-}
+  );
+};
 
-export default ProductListScreen
+export default ProductListScreen;

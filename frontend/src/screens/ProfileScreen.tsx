@@ -6,11 +6,10 @@ import { useAppDispatch, useAppSelector } from "../hooks";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { getUserDetails, updateUserProfile } from "../actions/userActions";
-import { listMyOrders } from '../actions/orderActions'
+import { listMyOrders } from "../actions/orderActions";
 import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants";
 
 const ProfileScreen = () => {
-  const location = useLocation();
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -40,7 +39,7 @@ const ProfileScreen = () => {
       if (!user || !user.name || success) {
         dispatch({ type: USER_UPDATE_PROFILE_RESET });
         dispatch(getUserDetails("profile"));
-        dispatch(listMyOrders())
+        dispatch(listMyOrders());
       } else {
         setName(user.name);
         setEmail(user.email);
