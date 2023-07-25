@@ -15,6 +15,7 @@ import {
   ORDER_PAY_RESET,
   ORDER_DELIVER_RESET,
 } from "../constants/orderConstants";
+import { LOCAL_IP } from "../constants/IpLocal";
 
 declare global {
   interface Window {
@@ -64,7 +65,9 @@ const OrderScreen = () => {
     }
 
     const addPayPalScript = async () => {
-      const { data: clientId } = await axios.get("/api/config/paypal");
+      const { data: clientId } = await axios.get(
+        `${LOCAL_IP}/api/config/paypal`
+      );
       const script = document.createElement("script");
       script.type = "text/javascript";
       script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;

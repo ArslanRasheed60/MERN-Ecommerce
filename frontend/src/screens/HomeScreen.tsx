@@ -49,13 +49,14 @@ const HomeScreen = () => {
       ) : (
         <React.Fragment>
           <Row>
-            {products.map((product: any) => {
-              return (
-                <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                  <Product product={product} />
-                </Col>
-              );
-            })}
+            {products?.length &&
+              products?.map((product: any) => {
+                return (
+                  <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                    <Product product={product} />
+                  </Col>
+                );
+              })}
           </Row>
           <Paginate
             pages={pages}

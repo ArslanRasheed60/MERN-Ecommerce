@@ -1,39 +1,39 @@
-import React, { useEffect } from 'react'
-import { LinkContainer } from 'react-router-bootstrap'
-import { useNavigate } from 'react-router'
-import { Table, Button } from 'react-bootstrap'
-import { useAppDispatch, useAppSelector } from '../hooks'
-import Message from '../components/Message'
-import Loader from '../components/Loader'
-import { listUsers, deleteUser } from '../actions/userActions'
-import IUser from '../Interfaces/user'
+import React, { useEffect } from "react";
+import { LinkContainer } from "react-router-bootstrap";
+import { useNavigate } from "react-router";
+import { Table, Button } from "react-bootstrap";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import Message from "../components/Message";
+import Loader from "../components/Loader";
+import { listUsers, deleteUser } from "../actions/userActions";
+import IUser from "../Interfaces/user";
 
 const UserListScreen = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
-  const userList = useAppSelector((state) => state.userList)
-  const { loading, error, users } = userList
+  const userList = useAppSelector((state) => state.userList);
+  const { loading, error, users } = userList;
 
-  const userLogin = useAppSelector((state) => state.userLogin)
-  const { userInfo } = userLogin
+  const userLogin = useAppSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
-  const userDelete = useAppSelector((state) => state.userDelete)
-  const { success: successDelete } = userDelete
+  const userDelete = useAppSelector((state) => state.userDelete);
+  const { success: successDelete } = userDelete;
 
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
-      dispatch(listUsers())
+      dispatch(listUsers());
     } else {
-      navigate('/login')
+      navigate("/login");
     }
-  }, [dispatch, navigate, successDelete, userInfo])
+  }, [dispatch, navigate, successDelete, userInfo]);
 
-  const deleteHandler = (id:string) => {
-    if (window.confirm('Are you sure')) {
-      dispatch(deleteUser(id))
+  const deleteHandler = (id: string) => {
+    if (window.confirm("Are you sure")) {
+      dispatch(deleteUser(id));
     }
-  }
+  };
 
   return (
     <>
@@ -41,9 +41,16 @@ const UserListScreen = () => {
       {loading ? (
         <Loader />
       ) : error ? (
-        <Message variant='danger'>{error}</Message>
+        <Message variant="danger">{error}</Message>
       ) : (
-        <Table variant='dark' striped bordered hover responsive  className='table-lg'>
+        <Table
+          variant="dark"
+          striped
+          bordered
+          hover
+          responsive
+          className="table-lg"
+        >
           <thead>
             <tr>
               <th>ID</th>
@@ -63,23 +70,23 @@ const UserListScreen = () => {
                 </td>
                 <td>
                   {user.isAdmin ? (
-                    <i className='fas fa-check' style={{ color: 'green' }}></i>
+                    <i className="fas fa-check" style={{ color: "green" }}></i>
                   ) : (
-                    <i className='fas fa-times' style={{ color: 'red' }}></i>
+                    <i className="fas fa-times" style={{ color: "red" }}></i>
                   )}
                 </td>
                 <td>
                   <LinkContainer to={`/admin/user/${user._id}/edit`}>
-                    <Button variant='light' className='btn-sm'>
-                      <i className='fas fa-edit'></i>
+                    <Button variant="light" className="btn-sm">
+                      <i className="fas fa-edit"></i>
                     </Button>
                   </LinkContainer>
                   <Button
-                    variant='danger'
-                    className='btn-sm'
+                    variant="danger"
+                    className="btn-sm"
                     onClick={() => deleteHandler(user._id)}
                   >
-                    <i className='fas fa-trash'></i>
+                    <i className="fas fa-trash"></i>
                   </Button>
                 </td>
               </tr>
@@ -88,7 +95,7 @@ const UserListScreen = () => {
         </Table>
       )}
     </>
-  )
-}
+  );
+};
 
-export default UserListScreen
+export default UserListScreen;

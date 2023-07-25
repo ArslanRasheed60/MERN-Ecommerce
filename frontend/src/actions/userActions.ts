@@ -26,6 +26,7 @@ import {
   USER_UPDATE_REQUEST,
 } from '../constants/userConstants'
 import { ORDER_LIST_MY_RESET } from '../constants/orderConstants'
+import { LOCAL_IP } from '../constants/IpLocal'
 
 export const login = (email: string, password: string): any => async (dispatch: any) => {
   try {
@@ -40,7 +41,7 @@ export const login = (email: string, password: string): any => async (dispatch: 
     }
 
     const { data } = await axios.post(
-      '/api/users/login',
+      `${LOCAL_IP}/api/users/login`,
       { email, password },
       config
     )
@@ -87,7 +88,7 @@ export const register = (name: string, email: string, password: string): any => 
     }
 
     const { data } = await axios.post(
-      '/api/users',
+      `${LOCAL_IP}/api/users`,
       { name, email, password },
       config
     )
@@ -130,7 +131,7 @@ export const getUserDetails = (id: string) : any => async (dispatch: any, getSta
       },
     }
 
-    const { data } = await axios.get(`/api/users/${id}`, config)
+    const { data } = await axios.get(`${LOCAL_IP}/api/users/${id}`, config)
 
     dispatch({
       type: USER_DETAILS_SUCCESS,
@@ -168,7 +169,7 @@ export const updateUserProfile = (user: any) : any => async (dispatch: any, getS
       },
     }
 
-    const { data } = await axios.put(`/api/users/profile`, user, config)
+    const { data } = await axios.put(`${LOCAL_IP}/api/users/profile`, user, config)
 
     dispatch({
       type: USER_UPDATE_PROFILE_SUCCESS,
@@ -210,7 +211,7 @@ export const listUsers = (): any => async (dispatch: any, getState: any) => {
       },
     }
 
-    const { data } = await axios.get(`/api/users`, config)
+    const { data } = await axios.get(`${LOCAL_IP}/api/users`, config)
 
     dispatch({
       type: USER_LIST_SUCCESS,
@@ -247,7 +248,7 @@ export const deleteUser = (id: string): any => async (dispatch: any, getState: a
       },
     }
 
-    await axios.delete(`/api/users/${id}`, config)
+    await axios.delete(`${LOCAL_IP}/api/users/${id}`, config)
 
     dispatch({ type: USER_DELETE_SUCCESS })
   } catch (error: any) {
@@ -282,7 +283,7 @@ export const updateUser = (user: any): any => async (dispatch: any, getState: an
       },
     }
 
-    const { data } = await axios.put(`/api/users/${user._id}`, user, config)
+    const { data } = await axios.put(`${LOCAL_IP}/api/users/${user._id}`, user, config)
 
     dispatch({ type: USER_UPDATE_SUCCESS })
 

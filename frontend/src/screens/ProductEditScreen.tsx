@@ -8,6 +8,7 @@ import FormContainer from "../components/FormContainer";
 import { listProductDetails, updateProduct } from "../actions/productActions";
 import { PRODUCT_UPDATE_RESET } from "../constants/productConstants";
 import { useAppDispatch, useAppSelector } from "../hooks";
+import { LOCAL_IP } from "../constants/IpLocal";
 
 const ProductEditScreen = () => {
   const { id } = useParams();
@@ -68,7 +69,11 @@ const ProductEditScreen = () => {
           },
         };
 
-        const { data } = await axios.post("/api/upload", formData, config);
+        const { data } = await axios.post(
+          `${LOCAL_IP}/api/upload`,
+          formData,
+          config
+        );
 
         setImage(data);
         setUploading(false);

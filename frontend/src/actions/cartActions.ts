@@ -5,9 +5,10 @@ import {
   CART_SAVE_SHIPPING_ADDRESS,
   CART_SAVE_PAYMENT_METHOD,
 } from '../constants/cartConstants'
+import { LOCAL_IP } from '../constants/IpLocal'
 
 export const addToCart = (id: string, qty: number): any => async (dispatch: any, getState: any) => {
-  const { data } = await axios.get(`/api/products/${id}`)
+  const { data } = await axios.get(`${LOCAL_IP}/api/products/${id}`)
 
   dispatch({
     type: CART_ADD_ITEM,
